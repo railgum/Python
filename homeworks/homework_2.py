@@ -72,4 +72,4 @@ def degree_two(n):
             arr.append(i)
             i += 1
     return arr
-print(degree_two(100))
+# print(degree_two(100))
