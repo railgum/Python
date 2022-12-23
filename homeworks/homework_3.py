@@ -148,5 +148,5 @@ def Scrabble(word):
     return cost
 
 
-w = input('Введите слово: ')
-print(Scrabble(w))
+#w = input('Введите слово: ')
+#print(Scrabble(w))
