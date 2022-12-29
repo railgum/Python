@@ -1,3 +1,5 @@
+import math
+
 # Напишите программу, которая принимает на вход строку,
 # и отслеживает, сколько раз каждый символ уже встречался.
 # Количество повторов добавляется к символам с помощью постфикса формата _n.
@@ -21,8 +23,7 @@ def counting_char_string(string):
 
     return res
 
-
-#print(counting_char_string('a a a b c a a d c d d'))
+# print(counting_char_string('a a a b c a a d c d d'))
 
 
 # Пользователь вводит текст(строка). Словом считается последовательность
@@ -32,7 +33,7 @@ def counting_char_string(string):
 # Input: She sells sea shells on the sea shore The shells that she sells are sea shells I'm sure. So if she sells sea shells on the sea shore I'm sure that the shells are sea shore shells
 
 # Output: 13
-#import re
+# import re
 
 # def delete_point(string):
 #    while True:
@@ -41,10 +42,9 @@ def counting_char_string(string):
 #        else:
 #            return string
 
-
 def count_words(string):
     string = string.replace('.', ' ').replace(';', ' ').replace(',', ' ')
-    #string = string.replace(';', ' ')
+    # string = string.replace(';', ' ')
 
     print(string)
     words_arr = set(string.lower().split())  # (' |;|.')
@@ -54,7 +54,6 @@ def count_words(string):
     print(words_arr)
     return len(words_arr)
 
-
 s = "She sells sea shells on the sea shore; \
   The shells that she sells are sea shells I'm sure. \
     So if she sells sea shells on the sea shore. \
@@ -62,10 +61,10 @@ s = "She sells sea shells on the sea shore; \
 
 # print(count_words(s))
 
+
 # Ваня и Петя поспорили, кто быстрее решит следующую задачу: “Задана последовательность неотрицательных целых чисел. Требуется определить значение наибольшего элемента последовательности, которая завершается первым встретившимся нулем (число 0 не входит в последовательность)”. Однако 2 друга оказались не такими смышлеными. Никто из ребят не смог до конца сделать это задание. Они решили так: у кого будет меньше ошибок в коде, тот и выиграл спор. За помощью товарищи обратились к Вам, студентам.
 
 # Ваня
-
 
 def max_number_sequence():
     result_arr = []
@@ -91,5 +90,26 @@ def max_number_sequence_2():
         n = int(input('Введите следующее число: '))
     return max_number
 
-
 # print(max_number_sequence_2())
+
+
+# Задача 101 Вычислить число π c заданной точностью d
+
+# Пример:
+# при d = 0.001, π = 3.141    0.1 ≤ d ≤ 0.00000000001
+
+
+def given_accuracy_pi(d):
+    if (d > 0.1 or d < 0.00000000001):
+        print('Точность вне установленного диапазона')
+    else:
+        discharge = len(str(1-d))
+        result = ''
+        for digit in range(discharge):
+            result += str(math.pi)[digit]
+        return result
+
+#d = float(input('Введите точность для числа PI(0.1 ≤ d ≤ 0.00000000001): '))
+# print(given_accuracy_pi(d))
+
+
