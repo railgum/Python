@@ -1,3 +1,4 @@
+import re
 import math
 import random
 
@@ -116,10 +117,12 @@ def given_accuracy_pi(d):
 # print(given_accuracy_pi(d))
 
 
-# Задача 102 Задайте натуральное число N. Напишите программу, которая составит список простых множителей числа N.
+# Задача 102
+# Задайте натуральное число N. Напишите программу, которая составит список простых множителей числа N.
 
 
-# Задача 103 Задана натуральная степень k. Сформировать случайным образом список коэффициентов (значения от 0 до 100) многочлена и записать в файл file1.txt многочлен степени k.
+# Задача 103
+# Задана натуральная степень k. Сформировать случайным образом список коэффициентов (значения от 0 до 100) многочлена и записать в файл file1.txt многочлен степени k.
 
 # Пример:  k=2
 
@@ -131,7 +134,7 @@ def given_accuracy_pi(d):
 def random_list_digit(k):
     arr = []
     for i in range(k+1):
-        arr.append(random.randint(0, 100))
+        arr.append(random.randint(0, 5))
     return arr
 
 
@@ -146,30 +149,65 @@ def random_list_operator(k):
     return arr
 
 
-# print(random_list_operator(4))
-
 def polinomial():
     k = int(input('Введите степень многочлена: '))
     poli_digit = random_list_digit(k)
-    poli_digit_end = poli_digit[len(poli_digit)-1]
     print(poli_digit)
     poli_operator = random_list_operator(k)
     print(poli_operator)
-    #result = ''
-    # for item in range(len(poli_operator)):
-    #    result += ' ' + str(poli_digit[item])+'*x^' + \
-    #        str(len(poli_digit)-item-1) + ' ' + poli_operator[item]
-    # return (result + str(poli_digit_end)+' = 0')
+
+    # Составление многочлена
     result = {}
-    for item in range(len(poli_operator)):
+    for item in range(len(poli_digit)):
         if poli_digit[item] == 0:
             result[item] = ''
-        elif str(len(poli_digit)-item-1) == '1':
-            result[item] = str(poli_digit[item])+'*x' + poli_operator[item]
-        else:
+        elif poli_digit[item] == 1 and len(poli_digit)-1 != item \
+                and len(poli_digit)-2 != item:
+            result[item] = 'x^' + str(len(poli_digit)-item-1)
+        elif len(poli_digit)-2 != item and len(poli_digit)-1 != item:
             result[item] = str(poli_digit[item])+'*x^' + \
-                str(len(poli_digit)-item-1) + poli_operator[item]
-    return result
+                str(len(poli_digit)-item-1)
+        elif len(poli_digit)-2 == item and poli_digit[item] != 1:
+            result[item] = str(poli_digit[item]) + '*x'
+        elif len(poli_digit)-2 == item and poli_digit[item] == 1:
+            result[item] = 'x'
+        elif len(poli_digit)-1 == item and poli_digit[(len(poli_digit)-1)] != 0:
+            result[item] = str(poli_digit[item])
+        else:
+            result[item] = ''
+    return str(result)
 
 
-print(polinomial())
+with open('seminars/file1.txt', 'w+') as f1:
+    f1.write(polinomial())
+with open('seminars/file2.txt', 'w+') as f2:
+    f2.write(polinomial())
+
+# Задача 104
+# Даны два файла file1.txt и file2.txt, в каждом из которых находится запись многочлена(полученные в результате работы программы из задачи 103). Необходимо сформировать файл file_sum.txt, содержащий сумму многочленов.
+
+
+def extract_polinomial_from_file(file):
+    #file = 'seminars/file1.txt'
+
+    with open(file) as f:
+        str_file = f.readline()
+        # print(str_file1)
+        arr_file = re.split(r"(\*x\^\d)|(\*x)|(\=)", str_file)
+        result_arr = []
+        # удаляем None
+        for i in arr_file:
+            if i != None:
+                result_arr.append(i)
+
+        result_arr.reverse()
+        print(result_arr)
+        return result_arr
+
+
+#list_1 = extract_polinomial_from_file('seminars/file1.txt')
+#list_2 = extract_polinomial_from_file('seminars/file2.txt')
+
+#print(list_1 + list_2)
+
+# with open('seminars/file2.txt') as f2:
