@@ -121,6 +121,7 @@ def given_accuracy_pi(d):
 # Задайте натуральное число N. Напишите программу, которая составит список простых множителей числа N.
 
 
+
 # Задача 103
 # Задана натуральная степень k. Сформировать случайным образом список коэффициентов (значения от 0 до 100) многочлена и записать в файл file1.txt многочлен степени k.
 
@@ -131,11 +132,14 @@ def given_accuracy_pi(d):
 # x*x + 5 = 0
 # 10*x*x = 0
 
+# функция рандомных значений множителя многочленов
 def random_list_digit(k):
     arr = []
     for i in range(k+1):
-        arr.append(random.randint(0, 5))
+        arr.append(random.randint(0, 100))
     return arr
+
+# функция рандомных значений знаков многочленов
 
 
 def random_list_operator(k):
@@ -149,14 +153,16 @@ def random_list_operator(k):
     return arr
 
 
+# словарь многочленов по степеням
+
+
 def polinomial():
     k = int(input('Введите степень многочлена: '))
     poli_digit = random_list_digit(k)
-    print(poli_digit)
+    # print(poli_digit)
     poli_operator = random_list_operator(k)
-    print(poli_operator)
+    # print(poli_operator)
 
-    # Составление многочлена
     result = {}
     for item in range(len(poli_digit)):
         if poli_digit[item] == 0:
@@ -175,9 +181,25 @@ def polinomial():
             result[item] = str(poli_digit[item])
         else:
             result[item] = ''
-    return str(result)
+    # print(result)
+  # составление строки многочлена (можно сделать отдельную функцию)
+    result_poli_string = ''
+    for i in range(len(result)):
+        if result[i] == '':
+            result_poli_string += ''
+        elif i == (len(result)-1):
+            result_poli_string += result[i]
+        else:
+            result_poli_string += result[i] + poli_operator[i]
+
+    # убираем знак, если после него ничего нет
+    # print(result_poli_string[-1])
+    if (result_poli_string[-1] == '-') or (result_poli_string[-1] == '+'):
+        result_poli_string = result_poli_string[:-1]
+    return (result_poli_string+'=0')
 
 
+# записываем в два файла
 with open('seminars/file1.txt', 'w+') as f1:
     f1.write(polinomial())
 with open('seminars/file2.txt', 'w+') as f2:
@@ -186,28 +208,91 @@ with open('seminars/file2.txt', 'w+') as f2:
 # Задача 104
 # Даны два файла file1.txt и file2.txt, в каждом из которых находится запись многочлена(полученные в результате работы программы из задачи 103). Необходимо сформировать файл file_sum.txt, содержащий сумму многочленов.
 
+# функция разделения многочлена на составляющие
+
 
 def extract_polinomial_from_file(file):
-    #file = 'seminars/file1.txt'
 
+  # читаем из файла
     with open(file) as f:
         str_file = f.readline()
-        # print(str_file1)
-        arr_file = re.split(r"(\*x\^\d)|(\*x)|(\=)", str_file)
-        result_arr = []
+        print(str_file)
+
+        # с помощью регулярного выражения разделяем
+        arr_file = re.split(r"(\*x\^\d)|(\*x)|(\=)|(x\^\d)|x", str_file)
+
         # удаляем None
+        result_arr = []
         for i in arr_file:
             if i != None:
                 result_arr.append(i)
 
-        result_arr.reverse()
-        print(result_arr)
-        return result_arr
+        # добавляем множители в случае их отсутствия
+        for index, item in enumerate(result_arr):
+            if item == '' and index != (len(result_arr)-3):
+                result_arr[index] = '1'
+            elif item == '-':
+                result_arr[index] = '-1'
+            elif item == '+':
+                result_arr[index] = '+1'
+
+        # print(result_arr)
+        # преобразуем в словарь (можно работать со списком)
+        result_dict = {}
+        for i in range(1, int(len(result_arr)/2+1)):
+            result_dict[result_arr[(i*2)-1]] = result_arr[(i-1)*2]
+        # print(str(result_dict))
+        return result_dict
 
 
-#list_1 = extract_polinomial_from_file('seminars/file1.txt')
-#list_2 = extract_polinomial_from_file('seminars/file2.txt')
+list_1 = extract_polinomial_from_file('seminars/file1.txt')
+list_2 = extract_polinomial_from_file('seminars/file2.txt')
 
-#print(list_1 + list_2)
+# функция сложения многочленов
 
-# with open('seminars/file2.txt') as f2:
+
+def sum_polinomial(list_1, list_2):
+  # если в каком-либо многочлене отсутствуют элементы, добавляем
+    for key in list_1.keys():
+        if key in list_2.keys():
+            list_1[key] = str(int(list_1[key]) + int(list_2[key]))
+    # print(list_1)
+
+    # суммируем
+    result_sum = ''
+    key_list = list(list_1)
+    for key, value in list_1.items():
+        # print(key_list.index(key))
+        if key_list.index(key) == 0 or value[0] == '-':
+            result_sum += value + key
+        else:
+            result_sum += '+' + value + key
+
+    # если сумма последних элементов равна 0, удаляем
+    if list(list_1.values())[-1] == '0':
+        result_sum = result_sum[:-3]
+        result_sum += '=0'
+        return result_sum
+    else:
+        return (result_sum + '0')
+
+
+print(sum_polinomial(list_1, list_2))
+
+# записываем в файл
+with open('seminars/file_sum.txt', 'w+') as f3:
+    f3.write(sum_polinomial(list_1, list_2))
+
+
+
+#Задача 105 Напишите программу, удаляющую из текста все слова, содержащие ""абв"".
+
+#Задача 106 Создайте программу для игры с конфетами человек против человека.
+#Условие задачи: На столе лежит 2021 конфета. Играют два игрока делая ход друг после друга. Первый ход определяется жеребьёвкой. За один ход можно забрать не более чем 28 конфет. Все конфеты оппонента достаются сделавшему последний ход. Сколько конфет нужно взять первому игроку, чтобы забрать все конфеты у своего конкурента? (Добавьте игру против бота)
+
+#Задача 107 Создайте программу для игры в ""Крестики-нолики"" (Добавьте игру против бота)
+
+#Задача 108 Реализуйте RLE алгоритм: реализуйте модуль сжатия и восстановления данных (модуль в отдельном файле, импортируется как библиотека)
+#метод Упаковка: на вход подается текстовый файл, на выходе текстовый файл со сжатием.
+#метод Распаковка: на вход подается сжатый текстовый файл, на выходе текстовый файл восстановленный.
+#Прикинуть достигаемую степень сжатия (отношение количества байт сжатого к исходному).
