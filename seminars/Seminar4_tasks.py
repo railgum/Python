@@ -308,27 +308,34 @@ def delete_words(text, word):
     if len(word) > len(text):
         return ('В тексте нет такого количества букв')
     else:
+      # переводим слова в нижний регистр и создаем список слов
         list_words = text.lower().split()
-        print(list_words)
+      # инициализируем список для слов, подходящих условию
+        list_index = []
+        #print(list_words)
+      # проходим циклом по списку слов
         for item in list_words:
-            print(item)
             count = 0
+            # проверяем наличие нужного сочетания букв в каждом слове списка
             for j in list(word):
-                print(item)
+                # print(item)
                 if j in list(item):
                     count += 1
-                    print(count)
-                if count >= len(word):
-                    list_words.remove(item)
+                    # print(count)
+                    if count >= len(word):
+                    # если количество вхождений букв соответствует, либо больше длины нужного сочетания, добавляем слово в отдельный список
+                        list_index.append(item)
+        #print(list_index)
+        # удаляем из списка слов все найденные вхождения
+        list_words = [x for x in list_words if x not in list_index]
+        # возвращаем строку из списка
     return (' '.join(list_words))
 
 
-text = 'Положение «Атлетико» могло практически сразу стать катастрофическим либо патовым.'
+#text = 'Положение «Атлетико» могло практически сразу стать катастрофическим либо патовым.'
+#word = 'а'
 
-
-word = 'ат'
-
-print(delete_words(text, word))
+#print(delete_words(text, word))
 
 
 # Задача 106 Создайте программу для игры с конфетами человек против человека.
