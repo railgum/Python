@@ -120,6 +120,25 @@ def given_accuracy_pi(d):
 # Задача 102
 # Задайте натуральное число N. Напишите программу, которая составит список простых множителей числа N.
 
+def prime_factors(n):
+    list_fact = []
+    for i in range(2, n):
+        if n % i == 0:
+            count = 1
+            for j in range(2, (i//2+1)):
+                if i % j == 0:
+                    count = 0
+                    break
+            if count == 1:
+                list_fact.append(i)
+    if len(list_fact) == 0:
+        return ('Простых множителей у этого числа нет')
+    else:
+        return ('Простые множители этого числа: {0}'.format(list_fact))
+
+
+#n = int(input('Введите число: '))
+# print(prime_factors(n))
 
 
 # Задача 103
@@ -133,6 +152,8 @@ def given_accuracy_pi(d):
 # 10*x*x = 0
 
 # функция рандомных значений множителя многочленов
+
+
 def random_list_digit(k):
     arr = []
     for i in range(k+1):
@@ -182,7 +203,7 @@ def polinomial():
         else:
             result[item] = ''
     # print(result)
-  # составление строки многочлена (можно сделать отдельную функцию)
+    # составление строки многочлена (можно сделать отдельную функцию)
     result_poli_string = ''
     for i in range(len(result)):
         if result[i] == '':
@@ -200,10 +221,10 @@ def polinomial():
 
 
 # записываем в два файла
-with open('seminars/file1.txt', 'w+') as f1:
-    f1.write(polinomial())
-with open('seminars/file2.txt', 'w+') as f2:
-    f2.write(polinomial())
+# with open('seminars/file1.txt', 'w+') as f1:
+#    f1.write(polinomial())
+# with open('seminars/file2.txt', 'w+') as f2:
+#    f2.write(polinomial())
 
 # Задача 104
 # Даны два файла file1.txt и file2.txt, в каждом из которых находится запись многочлена(полученные в результате работы программы из задачи 103). Необходимо сформировать файл file_sum.txt, содержащий сумму многочленов.
@@ -213,7 +234,7 @@ with open('seminars/file2.txt', 'w+') as f2:
 
 def extract_polinomial_from_file(file):
 
-  # читаем из файла
+    # читаем из файла
     with open(file) as f:
         str_file = f.readline()
         print(str_file)
@@ -236,27 +257,24 @@ def extract_polinomial_from_file(file):
             elif item == '+':
                 result_arr[index] = '+1'
 
-        # print(result_arr)
         # преобразуем в словарь (можно работать со списком)
         result_dict = {}
         for i in range(1, int(len(result_arr)/2+1)):
             result_dict[result_arr[(i*2)-1]] = result_arr[(i-1)*2]
-        # print(str(result_dict))
         return result_dict
 
 
-list_1 = extract_polinomial_from_file('seminars/file1.txt')
-list_2 = extract_polinomial_from_file('seminars/file2.txt')
+#list_1 = extract_polinomial_from_file('seminars/file1.txt')
+#list_2 = extract_polinomial_from_file('seminars/file2.txt')
 
 # функция сложения многочленов
 
 
 def sum_polinomial(list_1, list_2):
-  # если в каком-либо многочлене отсутствуют элементы, добавляем
+    # если в каком-либо многочлене отсутствуют элементы, добавляем
     for key in list_1.keys():
         if key in list_2.keys():
             list_1[key] = str(int(list_1[key]) + int(list_2[key]))
-    # print(list_1)
 
     # суммируем
     result_sum = ''
@@ -277,22 +295,48 @@ def sum_polinomial(list_1, list_2):
         return (result_sum + '0')
 
 
-print(sum_polinomial(list_1, list_2))
+#print(sum_polinomial(list_1, list_2))
 
 # записываем в файл
-with open('seminars/file_sum.txt', 'w+') as f3:
-    f3.write(sum_polinomial(list_1, list_2))
+# with open('seminars/file_sum.txt', 'w+') as f3:
+#    f3.write(sum_polinomial(list_1, list_2))
 
 
+# Задача 105 Напишите программу, удаляющую из текста все слова, содержащие ""абв"".
 
-#Задача 105 Напишите программу, удаляющую из текста все слова, содержащие ""абв"".
+def delete_words(text, word):
+    if len(word) > len(text):
+        return ('В тексте нет такого количества букв')
+    else:
+        list_words = text.lower().split()
+        print(list_words)
+        for item in list_words:
+            print(item)
+            count = 0
+            for j in list(word):
+                print(item)
+                if j in list(item):
+                    count += 1
+                    print(count)
+                if count >= len(word):
+                    list_words.remove(item)
+    return (' '.join(list_words))
 
-#Задача 106 Создайте программу для игры с конфетами человек против человека.
-#Условие задачи: На столе лежит 2021 конфета. Играют два игрока делая ход друг после друга. Первый ход определяется жеребьёвкой. За один ход можно забрать не более чем 28 конфет. Все конфеты оппонента достаются сделавшему последний ход. Сколько конфет нужно взять первому игроку, чтобы забрать все конфеты у своего конкурента? (Добавьте игру против бота)
 
-#Задача 107 Создайте программу для игры в ""Крестики-нолики"" (Добавьте игру против бота)
+text = 'Положение «Атлетико» могло практически сразу стать катастрофическим либо патовым.'
 
-#Задача 108 Реализуйте RLE алгоритм: реализуйте модуль сжатия и восстановления данных (модуль в отдельном файле, импортируется как библиотека)
-#метод Упаковка: на вход подается текстовый файл, на выходе текстовый файл со сжатием.
-#метод Распаковка: на вход подается сжатый текстовый файл, на выходе текстовый файл восстановленный.
-#Прикинуть достигаемую степень сжатия (отношение количества байт сжатого к исходному).
+
+word = 'ат'
+
+print(delete_words(text, word))
+
+
+# Задача 106 Создайте программу для игры с конфетами человек против человека.
+# Условие задачи: На столе лежит 2021 конфета. Играют два игрока делая ход друг после друга. Первый ход определяется жеребьёвкой. За один ход можно забрать не более чем 28 конфет. Все конфеты оппонента достаются сделавшему последний ход. Сколько конфет нужно взять первому игроку, чтобы забрать все конфеты у своего конкурента? (Добавьте игру против бота)
+
+# Задача 107 Создайте программу для игры в ""Крестики-нолики"" (Добавьте игру против бота)
+
+# Задача 108 Реализуйте RLE алгоритм: реализуйте модуль сжатия и восстановления данных (модуль в отдельном файле, импортируется как библиотека)
+# метод Упаковка: на вход подается текстовый файл, на выходе текстовый файл со сжатием.
+# метод Распаковка: на вход подается сжатый текстовый файл, на выходе текстовый файл восстановленный.
+# Прикинуть достигаемую степень сжатия (отношение количества байт сжатого к исходному).
