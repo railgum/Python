@@ -1,5 +1,5 @@
 import math
-
+import random as r
 # Задача
 # У вас есть код, который вы не можете менять (так часто бывает, когда код в глубине программы используется множество раз и вы не хотите ничего сломать):
 # transformation = <???>
@@ -57,7 +57,13 @@ def same_by(characteristic, objects):
 # print(values)
 #print(same_by(lambda x: x % 2, values))
 
-if same_by(lambda x: x % 2, values):
-    print('same')
-else:
-    print('different')
+# if same_by(lambda x: x % 3, values):
+#    print('same')
+# else:
+#    print('different')
+
+
+#for i in range(21):
+
+#    player = (r.randint(0, 1))
+#    print(player)
