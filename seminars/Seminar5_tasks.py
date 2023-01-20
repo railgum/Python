@@ -63,7 +63,7 @@ def same_by(characteristic, objects):
 #    print('different')
 
 
-#for i in range(21):
+# for i in range(21):
 
 #    player = (r.randint(0, 1))
 #    print(player)
