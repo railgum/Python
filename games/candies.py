@@ -18,8 +18,12 @@ def game(pl1, pl2):
         if number_candies > 28:
             if 'BOT' in arr_players:
                 if arr_players[player % 2] == 'BOT':
-                    # bot_number = r.randint(1, 28) # 'BOT' глуп
-                    bot_number = number_candies//29  # 'BOT' не глуп)))
+                    if player == 1:
+                        # bot_number = r.randint(1, 28) # 'BOT' глуп
+                        # 'BOT' не глуп)))
+                        bot_number = int(number_candies % 29)
+                    else:
+                        bot_number = 29 - user_number
                     number_candies -= bot_number
                     print('BOT взял {0} конфет, осталось {1} конфет'.format(
                         bot_number, number_candies))
@@ -80,4 +84,10 @@ def init_game(rules):
 
 
 rules_candies = 'На столе лежит 2021 конфета. \nЗа один ход можно забрать не более чем 28 конфет и не менее 1 конфеты. \nВсе конфеты достаются сделавшему последний ход.\n'
+
+
 init_game(rules_candies)
+
+
+def print_some(text):
+    print(text)
