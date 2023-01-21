@@ -1,3 +1,4 @@
+import os
 # Задача
 # Создать телефонный справочник с возможностью импорта и экспорта данных в формате .txt.
 # Структура данных:
@@ -35,15 +36,9 @@
 file_name = 'phone_book.txt'
 
 
-def write_file(file_name, text):
-    text = ','.join(text)
-    with open(file_name, 'a', encoding='utf8') as data:
-        data.writelines(text + '\n')
-
-
-def read_file(file_name):
+def read_file():
     result = []
-    with open(file_name, 'r', encoding="utf-8") as data:
+    with open(file_name, 'r', encoding='utf-8') as data:
         for line in data:
             result.append(line.strip('\n').split(','))
     return result
@@ -51,9 +46,9 @@ def read_file(file_name):
 
 def search_user_name(user_list, name):
     result = []
+    count = 0
     for user in user_list:
         for j in user:
-            # print(j)
             if j.find(name) != -1:
                 result.append(user)
                 count += 1
@@ -62,18 +57,80 @@ def search_user_name(user_list, name):
 
 
 def search_user_phone(user_list, number):
-    result = ''
+    result = []
     for user in user_list:
         if user[3] == number:
-            result += '{0} {1} {2}'.format(user[0], user[1], user[2])
-    if result == '':
-        print('Абонентов с таким номером нет')
-    else:
-        print(result)
+            result.append(user)
+    return result
 
 
-def delete_user(user_list, name):
+def add_user():
+    last_name = input('Введите фамилию')
+    first_name = input('Введите имя')
+    patronymic = input('Введите отчество')
+    phone_number = input('Введите номер')
 
-    #write_file(file_name, 'daer ghfj kdlf')
-print(read_file(file_name))
-search_user_phone(read_file(file_name), '+6461653')
+    data_collection = [last_name, first_name, patronymic, phone_number]
+    write_file(data_collection)
+
+
+def write_file(text):
+    text = ','.join(text)
+    with open(file_name, 'a', encoding='utf8') as data:
+        data.writelines(text + '\n')
+
+
+def delete_user():
+    with open(file_name, 'r', encoding='utf-8') as r:
+        data = r.readlines()
+        data_num = list(enumerate(data))
+        for line in data_num:
+            print('>> {0} : {1}'.format(line[0]+1, line[1].strip('\n')))
+        print('Всего: {0} записей'.format(len(data_num)))
+        num_del = int(
+            input('Введите номер записи, которую хотите удалить? > '))
+
+    with open(file_name, 'w', encoding='utf-8') as w:
+        for line in data_num:
+            if line[0]+1 != num_del:
+                w.write(line[1])
+    return ('Осталось : {0} записей'. format(len(data_num)))
+
+
+def change_number():
+    with open(file_name, 'r', encoding='utf-8') as r:
+        data = r.readlines()
+        data_num = list(enumerate(data))
+        # print(type(data_num))
+        for line in data_num:
+            print('>> {0} : {1}'.format(line[0]+1, line[1].strip('\n')))
+        print('Всего: {0} записей'.format(len(data_num)))
+        num_change = int(
+            input('Введите номер записи, которую хотите изменить? > '))
+        data_user = data_num[num_change-1][1].strip('\n').split(',')
+        print(data_user)
+        phone_change = input('Введите новый номер > ')
+        data_user_change = data_user[0] + ',' + \
+            data_user[1] + ',' + data_user[2] + ',' + phone_change
+        print(data_user_change)
+
+    with open(file_name, 'w', encoding='utf-8') as w:
+        for line in data_num:
+            if line[0]+1 != num_change:
+                w.write(line[1])
+            else:
+                w.write(data_user_change + '\n')
+
+    return
+
+# def menu():
+
+
+#write_file(file_name, 'daer ghfj kdlf')
+# print(read_file(file_name))
+#print(search_user_name(read_file(file_name), 'Иван'))
+#print(search_user_phone(read_file(file_name), '+7125478541'))
+#w, u = search_user_name(read_file(file_name), 'Иван')
+# print(w)
+# print(delete_user(read_file(file_name)))
+change_number()
