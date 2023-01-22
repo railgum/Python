@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 
 # Files and directories
-lectures/
+lectures/*
 homeworks/homework_6.zip
