@@ -38,6 +38,7 @@ file_name = 'phone_book.txt'
 def read_file():
     #result = []
     os.system("cls")
+    print('\n')
     with open(file_name, 'r', encoding='utf-8') as data:
         for line in data:
             print(line.strip('\n').split(','))
