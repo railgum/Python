@@ -5,8 +5,8 @@ import os
 # Фамилия, имя, отчество, номер телефона.
 
 # Пример данных:
-#Ivanov, Ivan, Ivanovich, +79111234567
-#Petrov, Petr, Petrovich, +79119876543
+# Ivanov, Ivan, Ivanovich, +79111234567
+# Petrov, Petr, Petrovich, +79119876543
 
 # Функции справочника:
 # - Показать все записи
@@ -27,7 +27,7 @@ import os
 # 4 - Добавить новый контакт
 # 5 - Удалить контакт
 # 6 - Изменить номер телефона у контакта
-#7 - Выход
+# 7 - Выход
 
 # После выбора действия выполняется функция, реализующая это действие.
 # После завершения работы функции пользователь возвращается в меню.
@@ -53,7 +53,15 @@ def search_user_name(user_list, name):
                 result.append(user)
                 count += 1
                 break
-    return (result, count)
+    if count == 1:
+        print(result)
+    else:
+        print('Найдено {0} совпадений: \n'.format(count))
+        for person in result:
+            print(person)
+
+    input('\n"Enter - возврат в меню >> ')
+    menu()
 
 
 def search_user_phone(user_list, number):
@@ -61,14 +69,16 @@ def search_user_phone(user_list, number):
     for user in user_list:
         if user[3] == number:
             result.append(user)
-    return result
+    print(result[0])
+    input('\n"Enter - возврат в меню >> ')
+    menu()
 
 
 def add_user():
-    last_name = input('Введите фамилию')
-    first_name = input('Введите имя')
-    patronymic = input('Введите отчество')
-    phone_number = input('Введите номер')
+    last_name = input('Введите фамилию >> ')
+    first_name = input('Введите имя >> ')
+    patronymic = input('Введите отчество >> ')
+    phone_number = input('Введите номер >> ')
 
     data_collection = [last_name, first_name, patronymic, phone_number]
     write_file(data_collection)
@@ -123,14 +133,58 @@ def change_number():
 
     return
 
-# def menu():
 
+def menu():
+    os.system("cls")
+    menu = ('Телефонный справочник\n\n'
+            'Доступные действия:\n'
+            '1 - Показать все записи\n'
+            '2 - Найти запись по вхождению частей имени\n'
+            '3 - Найти запись по телефону\n'
+            '4 - Добавить новый контакт\n'
+            '5 - Удалить контакт\n'
+            '6 - Изменить номер телефона у контакта\n'
+            '7 - Выход')
+    print(menu)
+    fail_answer = 10
+    user_list = read_file()
+    while fail_answer > 0:
+        answer = input('Введите номер действия:>> ')
+        if not answer.isdigit():
+            print('Нужно ввести число')
+            fail_answer -= 1
+            continue
+        else:
+            if answer == '1':
+                phone_book = read_file()
+                for person in phone_book:
+                    print(person)
+                input('"Enter - возврат в меню >> ')
+                os.system("cls")
+                print(menu)
+            if answer == '2':
+                os.system("cls")
+                name = input('Введите имя абонента >> ')
+                search_user_name(user_list, name)
+            if answer == '3':
+                os.system("cls")
+                number = input('Введите номер телефона >> ')
+                search_user_phone(user_list, number)
+            if answer == '4':
+                add_user()
+            if answer == '5':
+                delete_user()
+            if answer == '6':
+                change_number()
+            if answer == '7':
+                return
 
-#write_file(file_name, 'daer ghfj kdlf')
-# print(read_file(file_name))
-#print(search_user_name(read_file(file_name), 'Иван'))
-#print(search_user_phone(read_file(file_name), '+7125478541'))
-#w, u = search_user_name(read_file(file_name), 'Иван')
-# print(w)
-# print(delete_user(read_file(file_name)))
-change_number()
+                #write_file(file_name, 'daer ghfj kdlf')
+                # print(read_file(file_name))
+                #print(search_user_name(read_file(file_name), 'Иван'))
+                #print(search_user_phone(read_file(file_name), '+7125478541'))
+                #w, u = search_user_name(read_file(file_name), 'Иван')
+                # print(w)
+                # print(delete_user(read_file(file_name)))
+                # change_number()
+menu()
