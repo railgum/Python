@@ -33,15 +33,16 @@ import os
 # После завершения работы функции пользователь возвращается в меню.
 
 
-file_name = 'phone_book.txt'
-
-
 def read_file():
-    result = []
+    #result = []
+    os.system("cls")
     with open(file_name, 'r', encoding='utf-8') as data:
         for line in data:
-            result.append(line.strip('\n').split(','))
-    return result
+            print(line.strip('\n').split(','))
+    # for person in result:
+    #    print(person)
+        input('\n"Enter - возврат в меню >> ')
+        menu()
 
 
 def search_user_name(user_list, name):
@@ -87,7 +88,8 @@ def add_user():
 def write_file(text):
     text = ','.join(text)
     with open(file_name, 'a', encoding='utf8') as data:
-        data.writelines(text + '\n')
+        data.writelines('\n' + text)
+    read_file()
 
 
 def delete_user():
@@ -104,7 +106,8 @@ def delete_user():
         for line in data_num:
             if line[0]+1 != num_del:
                 w.write(line[1])
-    return ('Осталось : {0} записей'. format(len(data_num)))
+
+    read_file()
 
 
 def change_number():
@@ -122,7 +125,7 @@ def change_number():
         phone_change = input('Введите новый номер > ')
         data_user_change = data_user[0] + ',' + \
             data_user[1] + ',' + data_user[2] + ',' + phone_change
-        print(data_user_change)
+        # print(data_user_change)
 
     with open(file_name, 'w', encoding='utf-8') as w:
         for line in data_num:
@@ -130,7 +133,7 @@ def change_number():
                 w.write(line[1])
             else:
                 w.write(data_user_change + '\n')
-
+    read_file()
     return
 
 
@@ -147,19 +150,19 @@ def menu():
             '7 - Выход')
     print(menu)
     fail_answer = 10
-    user_list = read_file()
+    with open(file_name, 'r', encoding='utf-8') as data:
+        user_list = []
+        for line in data:
+            user_list.append(line.strip('\n').split(','))
     while fail_answer > 0:
         answer = input('Введите номер действия:>> ')
         if not answer.isdigit():
-            print('Нужно ввести число')
+            print('Нужно ввести число от 1 до 7')
             fail_answer -= 1
             continue
         else:
             if answer == '1':
-                phone_book = read_file()
-                for person in phone_book:
-                    print(person)
-                input('"Enter - возврат в меню >> ')
+                read_file()
                 os.system("cls")
                 print(menu)
             if answer == '2':
@@ -171,20 +174,20 @@ def menu():
                 number = input('Введите номер телефона >> ')
                 search_user_phone(user_list, number)
             if answer == '4':
+                os.system("cls")
                 add_user()
             if answer == '5':
+                os.system("cls")
                 delete_user()
             if answer == '6':
+                os.system("cls")
                 change_number()
             if answer == '7':
-                return
+                exit(0)
 
-                #write_file(file_name, 'daer ghfj kdlf')
-                # print(read_file(file_name))
-                #print(search_user_name(read_file(file_name), 'Иван'))
-                #print(search_user_phone(read_file(file_name), '+7125478541'))
-                #w, u = search_user_name(read_file(file_name), 'Иван')
-                # print(w)
-                # print(delete_user(read_file(file_name)))
-                # change_number()
+    print('Телефонный справочник - это вам не игрушка!!!')
+    exit(0)
+
+
+file_name = 'phone_book.txt'
 menu()
