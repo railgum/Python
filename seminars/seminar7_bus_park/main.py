@@ -1,4 +1,3 @@
-from menu import Menu
 import function as fn
 
 
@@ -14,8 +13,6 @@ if __name__ == "__main__":
         ("6", "Добавление маршрута", fn.add_route),
         ("7", "Выход", lambda: exit())]
 
-    menu = Menu(menuitems)
-    # menu.run('>:')
 
 
 def print_menu():

@@ -6,10 +6,9 @@ def read_data_from_file(name):
         return result
 
 
-def save_data_to_file(name, datalist):
-    with open(name, 'w', encoding='utf-8') as datafile:
-        for rawdata in datalist:
-            datafile.write(','.join(rawdata)+'\n')
+def save_data_to_file(name, data):
+    with open(name, 'a', encoding='utf-8') as datafile:
+        datafile.write(data)
 
 
 def print_bus():
@@ -17,11 +16,11 @@ def print_bus():
 
 
 def add_bus():
-    return
+    save_data_to_file('bus.txt', input('Введите номер автобуса: > '))
 
 
 def print_driver():
-    return 
+    return
 
 
 def add_driver():

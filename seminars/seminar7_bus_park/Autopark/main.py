@@ -1,7 +1,8 @@
 from menu import Menu
 import function as fn
 
-if __name__ == "__main__":
+if __name__ == "__main__":2
+
     # основной блок
     menuitems = [
         ("1", "Вывод автобусов", fn.print_bus),
