@@ -50,7 +50,7 @@ def add_route():
                 print('Доступных маршрутов нет!')
         break
     name = f'm{count_route+1}, {number_route}'
-    rand_bus = # lambda x: 
+    # rand_bus = # lambda x:
     return name
 
 
