@@ -1,3 +1,6 @@
 m1, 5, bus1, driver1
 m2, 10, bus2, driver2
 m3, 7, bus2, driver1
+m4, 27, bus7, driver4
+m5, 3, bus8, driver4
+m6, 43, bus6, driver2

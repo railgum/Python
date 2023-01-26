@@ -5,4 +5,6 @@ bus4,АТ089А89
 bus5,ВА763О89
 bus6,AА743B89
 bus7,95Kfk459
-bus8,TT222T177
+bus8,TT222T1779
+bus9, we23ff
+bus10, er567uj
