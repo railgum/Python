@@ -264,8 +264,6 @@ def extract_polinomial_from_file(file):
         return result_dict
 
 
-#list_1 = extract_polinomial_from_file('seminars/file1.txt')
-#list_2 = extract_polinomial_from_file('seminars/file2.txt')
 
 # функция сложения многочленов
 
