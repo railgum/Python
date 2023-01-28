@@ -1,3 +1,6 @@
+import re
+
+expr = '23* 10 * 2+ 10 + 10 * 10 * 2 + 5- 7 * 8 + 10 / 2'
 
 
 def calc(a, b, op):
@@ -11,15 +14,28 @@ def calc(a, b, op):
         return (a/b)
 
 
-n = '23 * 10 * 2 + 10 + 10 * 10 * 2 + 5 - 7 * 8 + 10 / 2'
-m = n.split()
-print(m)
-m2 = []
-#a = int(m[0])
-#b = int(m[2])
-#c = m[1]
+expr_without_spaces = expr.replace(' ', '')
+print(expr_without_spaces)
+list_digits = re.split('\+|-|\/|\*', expr_without_spaces)
+print(list_digits)
+list_signs = list(
+    filter(lambda x: x != '', re.split('\d+', expr_without_spaces)))
+print(list_signs)
 
-# 2
+# print(result)
+list_sum = []
+result = int(list_digits[0])
+
+for digit in range(1, len(list_digits)-1):
+    if list_signs[digit-1] == '*' or list_signs[digit-1] == '/':
+        result = calc(result, int(list_digits[digit]), list_signs[digit-1])
+        # print(result)
+        list_sum.append(result)
+        print(list_sum.pop(1-digit))
+    else:
+        list_sum.append(list_digits[digit])
+        continue
+print(list_sum)
 
 
 def sum(list_result):
@@ -29,18 +45,19 @@ def sum(list_result):
     return result
 
 
-result = int(m[0])
+#result = int(m[0])
 
-for i in range(1, len(m) - 1, 2):
-    if m[i] == '*' or m[i] == '/':
-        result = calc(int(m[i - 1]), int(m[i + 1]), m[i])
-        m2.append(result)
-        
-    else:
-        m2.append(m[i])
-        m2.append(int(m[i + 1]))
+# for i in range(1, len(m) - 1, 2):
+#    if m[i] == '*' or m[i] == '/':
+#        result = calc(int(m[i - 1]), int(m[i + 1]), m[i])
+#        m2.append(result)
+#        m.pop(i+1)
+#        m.insert(i+1, result)
+#    else:
+#        m2.append(m[i])
+    #m2.append(int(m[i + 1]))
 
 
 # print(m)
-print(m2)
-#print(sum(m2))
+# print(m2)
+# print(sum(m2))
