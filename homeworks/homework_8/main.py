@@ -22,7 +22,11 @@ list_signs = list(
     filter(lambda x: x != '', re.split('\d+', expr_without_spaces)))
 print(list_signs)
 
-# print(result)
+expr_list = re.split(
+    '((\\d*\\.\\d+)|(\\d+)|([\+\-\\*\/\\(\\)]))', expr_without_spaces)
+
+print(expr_list)
+
 list_sum = []
 result = int(list_digits[0])
 
@@ -31,11 +35,14 @@ for digit in range(1, len(list_digits)-1):
         result = calc(result, int(list_digits[digit]), list_signs[digit-1])
         # print(result)
         list_sum.append(result)
-        print(list_sum.pop(1-digit))
+        if list_signs[digit] == '*' or list_signs[digit] == '/':
+            result = calc(result, int(list_digits[digit]), list_signs[digit-1])
+            list_sum.append(list_sum.pop(digit-1))
+        else:
+            list_sum.append(list_digits[digit+1])
     else:
         list_sum.append(list_digits[digit])
-        continue
-print(list_sum)
+# print(list_sum)
 
 
 def sum(list_result):
