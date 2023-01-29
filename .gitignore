@@ -131,4 +131,6 @@ dmypy.json
 # Files and directories
 lectures
 homeworks/*.zip
+tutorial_env
+.pip_folder
 games
