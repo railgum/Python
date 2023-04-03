@@ -8,10 +8,10 @@ def pow_recursive(a, b):
         return (a*pow_recursive(a, b-1))
 
 
-#a = int(input('Введите число: '))
-#b = int(input('Введите степень: '))
+# a = int(input('Введите число: '))
+# b = int(input('Введите степень: '))
 
-#print('Результат - ', pow_recursive(a, b))
+# print('Результат - ', pow_recursive(a, b))
 
 
 # Задача 28:
@@ -24,6 +24,6 @@ def sum(a, b):
         return (sum(a+1, b-1))
 
 
-#a = int(input('Введите 1 число: '))
-#b = int(input('Введите 2 число: '))
-#print('Сумма чисел - ', sum(a, b))
+# a = int(input('Введите 1 число: '))
+# b = int(input('Введите 2 число: '))
+# print('Сумма чисел - ', sum(a, b))
